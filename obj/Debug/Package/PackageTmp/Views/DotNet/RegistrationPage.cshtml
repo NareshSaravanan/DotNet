@@ -1,0 +1,376 @@
+﻿
+@{
+    ViewBag.Title = "RegistratonPage";
+}
+@if (@System.Web.HttpContext.Current.Request.HttpMethod == "POST"  && ViewBag.popup)
+{
+    <script type="text/javascript">
+    $(function(){
+
+        $('#myModal').modal('show')
+    })
+    </script>
+}
+
+
+<div class="panel panel-default">
+    <div class="panel-heading main-heading">TGM201 - Voyage Plan</div>
+    <div class="panel-body">
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation">@Html.ActionLink("Selection", "DemoPage", "DotNet")</li>
+            <li role="presentation"  class="active">@Html.ActionLink("Registration", "RegistrationPage", "DotNet")</li>
+            <li role="presentation">@Html.ActionLink("Currency", "CurrencyPage", "DotNet")</li>
+            <li role="presentation">@Html.ActionLink("Clause", "ClausePage", "DotNet")</li>
+        </ul>
+@using (Html.BeginForm("RegistrationPage", "DotNet",
+                            new { popup = true }, FormMethod.Post, null))
+{
+        <div class="row">
+            <div class="col-lg-1">
+                <label>Vessel : </label>
+                <span ng-bind="voyagePlan.vessel">@ViewBag.getobject.vessel</span>
+            </div>
+            <div class="col-lg-2">
+                <label>Name : </label>
+                <span ng-bind="voyagePlan.name">@ViewBag.getobject.name</span>
+            </div>
+            <div class="col-lg-2">
+                <label>Nationality : </label>
+                <span ng-bind="voyagePlan.nationality">@ViewBag.getobject.nationality</span>
+            </div>
+        </div>
+        <div class="well well-lg">
+
+            <div class="row">
+                <div class="col-lg-2">
+                    <label>Vessel: </label>
+                    <input type="text" class="form-control" value="@ViewBag.getobject.vessel" disabled="disabled">
+                </div>
+                <div class="col-lg-2">
+                    <label>Voyage: </label>
+                    <input type="text" class="form-control" value="@ViewBag.getobject.voyage" disabled="disabled">
+                </div>
+                <div class="col-lg-2">
+                    <label>Leg: </label>
+                    <input type="text" class="form-control" value="@ViewBag.getobject.leg" disabled="disabled">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-2">
+                    <label>Line: </label>
+                    <select value="@ViewBag.getobject.line" class="form-control">
+                        <option value="SWI">SWI</option>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <label>Consolidation Line: </label>
+                    <select value="@ViewBag.getobject.consolidationline" class="form-control">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <label>Consort Sailing No: </label>
+                    <input class="form-control" type="text" value="@ViewBag.getobject.consortsailingno">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <label>Master: </label>
+                    <input class="form-control" type="text" value="@ViewBag.getobject.master">
+                </div>
+                <div class="col-lg-2">
+                    <label>Trade: </label>
+                    <select value="@ViewBag.getobject.trade" class="form-control">
+                        <option value="USW">USW</option>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <label>Service: </label>
+                    <select value="@ViewBag.getobject.service" class="form-control">
+                        <option value="USW">USW</option>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <label>Weight: </label>
+                    <select value="@ViewBag.getobject.weight" class="form-control">
+                        <option value="KG">KiloGrams</option>
+                        <option value="G">Grams</option>
+                        <option value="MicG">MicroGrams</option>
+                        <option value="MG">MilliGrams</option>
+                        <option value="P">Pounds</option>
+                        <option value="T">Tons</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <label>Statistics Period: </label>
+                    <p class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" value="@ViewBag.getobject.statisticsPeriod" is-open="popup1.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+
+                </div>
+                <div class="col-lg-2">
+                    <label>Currency: </label>
+                    <input type="text" value="@ViewBag.getobject.currency" uib-typeahead="code.code as code.name_plural +' - '+ code.code for code in getCurrencList | filter:$viewValue | limitTo:8" class="form-control">
+                </div>
+                <div class="col-lg-2">
+                    <label>MOT: </label>
+                    <select value="@ViewBag.getobject.mot" class="form-control">
+                        <option value="S">S</option>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <label>Measure: </label>
+                    <input class="form-control" type="text" value="@ViewBag.getobject.measure">
+                </div>
+                <div class="col-lg-2">
+                    <label>Temp: </label>
+                    <select value="@ViewBag.getobject.temp" class="form-control">
+                        <option value="K">Kelvin</option>
+                        <option value="C">Celsius</option>
+                        <option value="F">Fahrenheit</option>
+                        <option value="Ra">Rankine</option>
+                        <option value="D">Delisle</option>
+                        <option value="N">Newton</option>
+                        </select>
+</div>
+            </div>
+            <div class="row">
+                <div class="col-lg-2">
+                    <label>Vessel Plan: </label>
+                    <input class="form-control" type="text" value="@ViewBag.getobject.vesselPlan">
+                </div>
+                
+                <div class="col-lg-2">
+                    <label>Publish: </label>
+                    <input value="@ViewBag.getobject.publish" type="checkbox">
+                </div>
+                <div class="col-lg-2">
+                    <label>Kind</label>
+                   
+                    <input type="text" class="form-control" value="@ViewBag.getobject.kind" />
+@using (Html.BeginForm("RegistrationPage", "DotNet",
+                       new { popup = true }, FormMethod.Post, null))
+{
+                    <input type="submit" value="filter" class="btn btn-primary"/>
+}
+                </div>
+                <div class="col-lg-2">
+                    <label>Loading Date Basis: </label>
+                    <select value="@ViewBag.getobject.loadingDateBasis" class="form-control">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <label>User: </label><br>
+                    <input value="@ViewBag.getobject.user" class="form-control" type="text" value="">
+                </div>
+            </div>
+            <div id="myModal" class="modal fade in">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h4 class="modal-title">Filter</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+
+                                        <th>Cargo Type</th>
+                                        <th>Cargo Description</th>
+                                        <th>Unit Size</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr onclick="location.href = '@(Url.Action("RegistrationPage", "DotNet", new { value = "20BK" }))'">
+                                        <td>20BK</td>
+                                        <td>Cargo Type Desc</td>
+                                        <td>20</td>
+
+                                    </tr>
+                                    <tr onclick="location.href = '@(Url.Action("RegistrationPage", "DotNet", new { value = "PLT" }))'">
+                                        <td>PLT</td>
+                                        <td>PALLET</td>
+                                        <td>0</td>
+
+                                    </tr>
+                                    <tr onclick="location.href = '@(Url.Action("RegistrationPage", "DotNet", new { value = "TPK" }))'">
+                                        <td>TPK</td>
+                                        <td>TIMBERPACK</td>
+                                        <td>0</td>
+
+                                    </tr>
+                                    <tr onclick="location.href = '@(Url.Action("RegistrationPage", "DotNet", new { value = "20BO" }))'">
+                                        <td>20BO</td>
+                                        <td>20' BOLSTER/S</td>
+                                        <td>20</td>
+
+                                    </tr>
+                                    <tr onclick="location.href = '@(Url.Action("RegistrationPage", "DotNet", new { value = "40DY" }))'">
+                                        <td>40DY</td>
+                                        <td>40' DRY CONTAINER</td>
+                                        <td>40</td>
+
+                                    </tr>
+                                    <tr onclick="location.href = '@(Url.Action("RegistrationPage", "DotNet", new { value = "20FA" }))'">
+                                        <td>20FA</td>
+                                        <td>20' FAN TAINER/S</td>
+                                        <td>20</td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dalog -->
+            </div>
+        </div>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Voyage Details
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                    <div class="panel-body">
+                        <div class="row">
+                             @if (ViewBag.edit == "true")
+                             {
+
+                                <i style="cursor:pointer" onclick="location.href = '@(Url.Action("RegistrationPage", "DotNet", new { edit = "false" }))'" class="glyphicon glyphicon-floppy-disk col-lg-2"></i>
+                             }
+                             else
+                             {
+
+                                <i style="cursor:pointer" onclick="location.href = '@(Url.Action("RegistrationPage", "DotNet", new { edit = "true" }))'" class="glyphicon glyphicon-edit col-lg-2"></i>
+                             }
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                               
+                                    <th>Vessel</th>
+                                    <th>Voyage</th>
+                                    <th>Currency</th>
+                                    <th>Leg</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               @foreach (var getobject in ViewBag.getlist)
+                               {
+                                   if (ViewBag.edit == "true")
+                                   {
+                                <tr>
+                                    <td><input class="form-control" type="text" value="@getobject.vessel" /></td>
+                                    <td><input class="form-control" type="text" value="@getobject.voyage" /></td>
+                                    <td>
+                                        <select class="form-control" id="currency" name="currency" value="@getobject.currency">
+                                            <option value="USA">USA</option>
+                                            <option value="AUD">AUD</option>
+                                            <option value="EUR">EUR</option>
+                                            <option value="FJD">FJD</option>
+                                            <option value="SGD">SGD</option>
+                                        </select>
+                                    </td>
+                                    <td><input class="form-control" type="text" value="@getobject.leg" /></td>
+
+                                </tr> }
+                                   else
+                                   {
+
+                                    <tr>
+                                        <td>@getobject.vessel</td>
+                                        <td>@getobject.voyage</td>
+                                        <td>
+                                            @getobject.currency
+                                    </td>
+                                    <td>@getobject.leg</td>
+
+                                </tr>
+                                   }
+
+                               }
+                              
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingTwo">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Port Details
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <label>PORT : </label>
+                                <label ng-bind="voyagePlan.portDetails.port">@ViewBag.getobject.portDetails.port</label>
+                            </div>
+                            <div class="col-lg-1">
+                                <label>Seq : </label>
+                                <label ng-bind="">@ViewBag.getobject.portDetails.seq</label>
+                            </div>
+                            <div class="col-lg-1">
+                                <label>Lcc : </label>
+                                <label ng-bind="">@ViewBag.getobject.portDetails.lcc</label>
+                            </div>
+                            
+                        </div>
+                        
+                        <table class="table">
+                            <thead>
+                                <tr>
+
+                                    <th>Currency</th>
+                                    <th>ExchangeRate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (int i = 0; i < ViewBag.getobject.portDetails.currency.Count; i++)
+                                {
+                                <tr>
+                                    <td>@ViewBag.getobject.portDetails.currency[i].Currency</td>
+                                    <td>@ViewBag.getobject.portDetails.currency[i].ExchangeRate</td>
+                                   
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+ </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingThree">
+                    <h4 class="panel-title">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            BL CLOSING
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                    <div class="panel-body">
+                            In Prgress
+                       </div>
+                </div>
+            </div>
+        </div>
+}
+    </div>
+</div>
